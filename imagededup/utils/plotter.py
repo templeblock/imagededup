@@ -4,8 +4,8 @@ from matplotlib import figure
 from pathlib import Path, PurePath
 from typing import Dict, Union, List
 
+import cv2
 import numpy as np
-from PIL import Image
 
 
 def _formatter(val: Union[int, np.float32]):
@@ -19,11 +19,11 @@ def _formatter(val: Union[int, np.float32]):
 
 
 def _plot_images(
-    image_dir: PurePath,
-    orig: str,
-    image_list: List,
-    scores: bool = False,
-    outfile: str = None,
+        image_dir: PurePath,
+        orig: str,
+        image_list: List,
+        scores: bool = False,
+        outfile: str = None,
 ) -> None:
     """
     Plotting function for plot_duplicates() defined below.
@@ -44,7 +44,7 @@ def _plot_images(
     ax = plt.subplot(
         gs[0, 1:3]
     )  # Always plot the original image in the middle of top row
-    ax.imshow(Image.open(image_dir / orig))
+    ax.imshow(cv2.cvtColor(cv2.imread(str(image_dir / orig), cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB))
     ax.set_title('Original Image: {}'.format(orig))
     ax.axis('off')
 
@@ -54,11 +54,11 @@ def _plot_images(
 
         ax = plt.subplot(gs[row_num, col_num])
         if scores:
-            ax.imshow(Image.open(image_dir / image_list[i][0]))
+            ax.imshow(cv2.cvtColor(cv2.imread(str(image_dir / image_list[i][0]), cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB))
             val = _formatter(image_list[i][1])
             title = ' '.join([image_list[i][0], f'({val})'])
         else:
-            ax.imshow(Image.open(image_dir / image_list[i]))
+            ax.imshow(cv2.cvtColor(cv2.imread(str(image_dir / image_list[i]), cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB))
             title = image_list[i]
 
         ax.set_title(title, fontsize=6)
@@ -72,7 +72,7 @@ def _plot_images(
 
 
 def _validate_args(
-    image_dir: Union[PurePath, str], duplicate_map: Dict, filename: str
+        image_dir: Union[PurePath, str], duplicate_map: Dict, filename: str
 ) -> PurePath:
     """Argument validator for plot_duplicates() defined below.
     Return PurePath to the image directory"""
@@ -92,10 +92,10 @@ def _validate_args(
 
 
 def plot_duplicates(
-    image_dir: Union[PurePath, str],
-    duplicate_map: Dict,
-    filename: str,
-    outfile: str = None,
+        image_dir: Union[PurePath, str],
+        duplicate_map: Dict,
+        filename: str,
+        outfile: str = None,
 ) -> None:
     """
     Given filename for an image, plot duplicates along with the original image using the duplicate map obtained using
