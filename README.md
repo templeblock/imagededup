@@ -1,5 +1,6 @@
 # Image Deduplicator (imagededup)
 
+[![Build Status](https://dev.azure.com/axelspringerai/Public/_apis/build/status/idealo.imagededup?branchName=master)](https://dev.azure.com/axelspringerai/Public/_build/latest?definitionId=1&branchName=master)
 [![Build Status](https://travis-ci.org/idealo/imagededup.svg?branch=master)](https://travis-ci.org/idealo/imagededup)
 [![Docs](https://img.shields.io/badge/docs-online-brightgreen)](https://idealo.github.io/imagededup/)
 [![codecov](https://codecov.io/gh/idealo/imagededup/branch/master/graph/badge.svg)](https://codecov.io/gh/idealo/imagededup)
@@ -30,15 +31,17 @@ Following details the functionality provided by the package:
 
 Detailed documentation for the package can be found at: [https://idealo.github.io/imagededup/](https://idealo.github.io/imagededup/)
 
-imagededup is compatible with Python 3.6 and is distributed under the Apache 2.0 license.
+imagededup is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
+It is distributed under the Apache 2.0 license.
 
 ## 📖 Contents
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Contribute](#contribute)
-- [Citation](#citation)
-- [Maintainers](#maintainers)
-- [License](#copyright)
+- [Installation](#%EF%B8%8F-installation)
+- [Quick Start](#-quick-start)
+- [Benchmarks](#-benchmarks)
+- [Contribute](#-contribute)
+- [Citation](#-citation)
+- [Maintainers](#-maintainers)
+- [License](#-copyright)
 
 ## ⚙️ Installation
 There are two ways to install imagededup:
@@ -49,15 +52,18 @@ There are two ways to install imagededup:
 pip install imagededup
 ```
 
-> ⚠️ **Note**: imagededup comes with TensorFlow CPU-only support by default. If you have GPUs, you should rather
-> install the TensorFlow version with GPU support especially when you use CNN to find duplicates. It's way faster. See the
-> [TensorFlow guide](https://www.tensorflow.org/install/gpu) for more details on how to install it.
+> ⚠️ **Note**: The TensorFlow >=2.1 and TensorFlow 1.15 release now include GPU support by default.
+> Before that CPU and GPU packages are separate. If you have GPUs, you should rather
+> install the TensorFlow version with GPU support especially when you use CNN to find duplicates.
+> It's way faster. See the [TensorFlow guide](https://www.tensorflow.org/install/gpu) for more
+> details on how to install it for older versions of TensorFlow.
 
 * Install imagededup from the GitHub source:
 
-```
+```bash
 git clone https://github.com/idealo/imagededup.git
-cd imagededup  
+cd imagededup
+pip install "cython>=0.29"
 python setup.py install
 ```  
 
@@ -121,13 +127,20 @@ repository.
 
 For more detailed usage of the package functionality, refer: [https://idealo.github.io/imagededup/](https://idealo.github.io/imagededup/)
 
+## ⏳ Benchmarks
+Detailed benchmarks on speed and classification metrics for different methods have been provided in the [documentation](https://idealo.github.io/imagededup/user_guide/benchmarks/).
+Generally speaking, following conclusions can be made:
+
+- CNN works best for near duplicates and datasets containing transformations.
+- All deduplication methods fare well on datasets containing exact duplicates, but Difference hashing is the fastest.
+
 ## 🤝 Contribute
 We welcome all kinds of contributions.
 See the [Contribution](CONTRIBUTING.md) guide for more details.
 
 ## 📝 Citation
 Please cite Imagededup in your publications if this is useful for your research. Here is an example BibTeX entry:
-```
+```BibTeX
 @misc{idealods2019imagededup,
   title={Imagededup},
   author={Tanuj Jain and Christopher Lennan and Zubin John and Dat Tran},
